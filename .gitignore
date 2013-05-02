@@ -4,3 +4,4 @@
 machine
 export_syms
 x86
+tester
