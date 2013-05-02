@@ -30,7 +30,7 @@ main(int argc, char **argv)
 	printf("[+] opened the echo device\n");
 
 	if (write(dev, &addr, sizeof(long))==0) {
-		printf("failed to write to echo device");
+		printf("failed to write to echo device\n");
 		return (1);
 	}
 	printf("[+] write &buff (%016lx) to the echo device\n", addr);
@@ -39,6 +39,8 @@ main(int argc, char **argv)
 		printf("[-] failed to read from echo device\n");
 	}
 	printf("[+] this should never happen due SMAP...\n");
+
+	kldunload(kld_fileid);
 
 
 	return (0);
