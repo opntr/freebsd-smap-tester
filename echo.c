@@ -114,8 +114,6 @@ echo_read(struct cdev *dev __unused, struct uio *uio, int ioflag __unused)
 	int error;
 	long *p=NULL;
 
-//	long	test;
-
 	/*
 	 * How big is this read operation?  Either as big as the user wants,
 	 * or as big as the remaining data.  Note that the 'len' does not
