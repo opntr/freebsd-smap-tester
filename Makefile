@@ -1,11 +1,3 @@
-all:	kernel userspace
-	(cd kernel; make)
-	(cd userspace; make)
-	cp kernel/echo.ko .
-	cp userspace/tester .
+SUBDIR= kmod smap-test
 
-clean:
-	(cd kernel; make clean)
-	(cd userspace; make clean)
-	rm -f echo.ko
-	rm -f tester
+.include <bsd.subdir.mk>

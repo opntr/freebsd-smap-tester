@@ -1,0 +1,6 @@
+-D_KERNEL
+-DKERNEL
+-I/usr/src
+-I/usr/src/sys
+-I/usr/src/sys/amd64
+-I/usr/src/sys/x86
