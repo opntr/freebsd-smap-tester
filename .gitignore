@@ -4,4 +4,4 @@
 machine
 export_syms
 x86
-tester
+smap-test/smap-test
