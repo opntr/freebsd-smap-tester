@@ -1,6 +1,6 @@
 #include <sys/types.h>
 #include <sys/cdefs.h>
-#include "../../../freebsd-base/sys/amd64/include/cpufunc.h" // XXXOP - hack
+#include <machine/cpufunc.h>
 #include <sys/module.h>
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -10,6 +10,22 @@
 #include <sys/uio.h>
 #include <sys/malloc.h>
 #include <vm/vm.h>
+
+#if 1
+static __inline void
+clac(void)
+{
+
+	__asm __volatile("clac" : : : "memory");
+}
+
+static __inline void
+stac(void)
+{
+
+	__asm __volatile("stac" : : : "memory");
+}
+#endif
 
 #define TEST_STRING	"Write from kernel to user-space. De ha mar sikerul, akkor: http://www.youtube.com/watch?v=wT8NO5FDS7E"
 
