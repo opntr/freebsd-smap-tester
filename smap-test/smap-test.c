@@ -25,16 +25,23 @@ main(int argc, char **argv)
 	test_allow();
 
 	test_0();
-#if 0
+	getchar();
+#if 1
 	test_allowed_read();
+	getchar();
 	test_allowed_write();
+	getchar();
 	test_destroy();
 
 	test_prepare();
+	test_allow();
 	test_0();
+	getchar();
 #endif
 	test_not_allowed_read();
+	getchar();
 	test_not_allowed_write();
+	getchar();
 
 	test_destroy();
 
