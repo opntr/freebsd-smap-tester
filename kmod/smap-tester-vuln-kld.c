@@ -32,7 +32,8 @@ stac(void)
 const char *agreement = "shoot my foot!!!11oneone!!";
 static bool allow_tests = false;
 static char *buf = NULL;
-static caddr_t us_addr=NULL;
+static caddr_t us_addr_in=NULL;
+static volatile caddr_t us_addr=NULL;
 
 MALLOC_DECLARE(M_SMAP_TEST);
 MALLOC_DEFINE(M_SMAP_TEST, "smap test", "Intel SMAP test malloc area");
@@ -71,11 +72,12 @@ sysctl_debug_smap_us_addr(SYSCTL_HANDLER_ARGS)
 {
 	int error=0;
 
-	error = sysctl_handle_long(oidp, &us_addr, 0, req);
+	error = sysctl_handle_long(oidp, &us_addr_in, 0, req);
 	if (error != 0 || req->newptr == NULL) {
 		return (error);
 	}
 
+	us_addr = us_addr_in;
 	printf("{+} us_addr set to %p\n", us_addr);
 
 	return (error);
@@ -92,7 +94,6 @@ sysctl_debug_smap_test0(SYSCTL_HANDLER_ARGS)
 {
 	int error=0;
 	long val;
-	char t;
 
 	printf("{#} TEST: not allowed read address from kernel to user-space\n");
 
@@ -112,7 +113,6 @@ sysctl_debug_smap_test0(SYSCTL_HANDLER_ARGS)
 	case	1:
 		printf("{#} derefable user-space memory region from kernel\n");
 
-		t = *us_addr;
 		printf("{-} %p\n", us_addr);
 		val = 0;
 		break;
@@ -134,7 +134,7 @@ sysctl_debug_smap_not_allowed_read(SYSCTL_HANDLER_ARGS)
 {
 	int error=0;
 	long val;
-	char t;
+	volatile char t;
 
 	printf("{#} TEST: not allowed read from kernel to user-space\n");
 
@@ -220,7 +220,7 @@ sysctl_debug_smap_allowed_read(SYSCTL_HANDLER_ARGS)
 {
 	int error=0;
 	long val;
-	char t;
+	volatile char t;
 
 	printf("{#} TEST: allowed read from kernel to user-space\n");
 
